@@ -1,2 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
+// Set weapon by variable
+//actual_weapon = weapon[weapon_index];
+set_weapon_and_fire(weapons_list);

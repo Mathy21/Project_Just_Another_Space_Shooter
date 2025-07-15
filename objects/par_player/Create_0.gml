@@ -1,10 +1,3 @@
-// Main
-life = 0;
-
-// Movement
-spd = 2;
-hspd = 0;
-vspd = 0;
 
 // State Machine
 // Enum basically set states number by readble names like: RESET = 0, IDLE = 0, etc.
@@ -69,11 +62,66 @@ set_inputs = function(_up,_left,_down,_right,_fire){
 damage = function(_value){
     if(_value == undefined || _value <= 0){ // Just a bug avoid, if I forget to set
         life -= 1;                          // a value to damage, it will no crash :D
-    }
+    } 
     if(life > 0){
         life -= _value;
-    } 
-        else(life <= 0){ // If life <= 0, go to dead state and destroy the instance
-                state = PLAYER_STATE.DEATH;
+    }
+        else if(life <= 0){ // If life <= 0, go to dead state and destroy the instance
+            state = PLAYER_STATE.DEATH;
         }
+}
+
+// Fire System Variables
+actual_weapon = 0;
+weapons_list = ds_list_create();
+can_fire = true;
+spaceship_weapon = function(_name,_pos_array,_obj,_dir_array,_speed) constructor {
+    name = _name;
+    pos_array = _pos_array;
+    obj = _obj;
+    dir_array = _dir_array;
+    speed = _speed;
+}
+// Find all weapons for the spaceship
+find_weapons = function(_db){
+    if(!ds_exists(_db,ds_type_map) || ds_map_empty(_db)){
+        show_debug_message("Weapons database empty or not exists");
+        return;
+    }
+    for(var i=0; i<ds_map_size(_db); i++){
+        var _key = string(i);
+        if(_db[? _key].allow_spaceship == spaceship_name){
+            ds_list_add(weapons_list,_db[? _key]);
+        }
+    }
+}
+
+find_weapons(global.weapons_db);
+
+// Fire system by the weapon is equiped
+set_weapon_and_fire = function(_list){
+    if(actual_weapon >= ds_list_size(_list) || ds_list_empty(_list)){
+        show_debug_message("Index out of bounds or list empty");
+        return;
+    }
+    if(fire && can_fire){
+        var _array_h = array_length(_list[| actual_weapon].pos_array);
+        for(var i=0; i<_array_h; i++){
+            var _array_w = array_length(_list[| actual_weapon].pos_array[i]);
+            var _pos_array = _list[| actual_weapon].pos_array[i];
+            var _bullet_array = _list[| actual_weapon].obj;
+            for(var j=0; j<_array_w; j++){
+                if(!is_array(_bullet_array)){
+                    var _shoot = instance_create_layer(x+_pos_array[0],y+_pos_array[1],"Bullets",_bullet_array);
+                    _shoot.spd = _list[| actual_weapon].speed;
+                }
+                    else{
+                    var _shoot = instance_create_layer(x+_pos_array[0],y+_pos_array[1],"Bullets",_bullet_array[i]);
+                    _shoot.spd = _list[| actual_weapon].speed; 
+                    }
+            }
+        }
+    }
+    // Things to do: Check if the bullets is a array and set different bullet
+    // Define values to the bullet
 }

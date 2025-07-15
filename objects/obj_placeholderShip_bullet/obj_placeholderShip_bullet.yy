@@ -1,7 +1,9 @@
 {
   "$GMObject":"",
   "%Name":"obj_placeholderShip_bullet",
-  "eventList":[],
+  "eventList":[
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":2,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+  ],
   "managed":true,
   "name":"obj_placeholderShip_bullet",
   "overriddenProperties":[],
@@ -30,7 +32,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_8x8_yellow_square",
+    "path":"sprites/spr_8x8_yellow_square/spr_8x8_yellow_square.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

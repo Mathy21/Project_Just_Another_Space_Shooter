@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sc_weapon_database",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sc_weapon_database",
+  "parent":{
+    "name":"Database",
+    "path":"folders/Scripts/Database.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

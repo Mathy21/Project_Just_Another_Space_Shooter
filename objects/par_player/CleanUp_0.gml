@@ -1,1 +1,1 @@
-///@description Destroy all data structures
+ds_list_destroy(weapons_list);
