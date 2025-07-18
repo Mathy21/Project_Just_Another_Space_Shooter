@@ -40,6 +40,7 @@ right = 0;
 fire = 0;
 is_moving = 0;
 is_firing = 0;
+fire_cooldown = 0;
 
 // This is the function that set each key, where this function
 // Receive all inputs in arguments, setting the keyboard action
@@ -75,12 +76,13 @@ damage = function(_value){
 actual_weapon = 0;
 weapons_list = ds_list_create();
 can_fire = true;
-spaceship_weapon = function(_name,_pos_array,_obj,_dir_array,_speed) constructor {
+spaceship_weapon = function(_name,_pos_array,_obj,_dir_array,_speed,_cooldown) constructor {
     name = _name;
     pos_array = _pos_array;
     obj = _obj;
     dir_array = _dir_array;
     speed = _speed;
+    cooldown = _cooldown;
 }
 // Find all weapons for the spaceship
 find_weapons = function(_db){
@@ -104,24 +106,31 @@ set_weapon_and_fire = function(_list){
         show_debug_message("Index out of bounds or list empty");
         return;
     }
-    if(fire && can_fire){
+    if(fire && can_fire && fire_cooldown <= 0){
         var _array_h = array_length(_list[| actual_weapon].pos_array);
+        if(fire_cooldown <= 0){
         for(var i=0; i<_array_h; i++){
             var _array_w = array_length(_list[| actual_weapon].pos_array[i]);
             var _pos_array = _list[| actual_weapon].pos_array[i];
-            var _bullet_array = _list[| actual_weapon].obj;
-            for(var j=0; j<_array_w; j++){
-                if(!is_array(_bullet_array)){
-                    var _shoot = instance_create_layer(x+_pos_array[0],y+_pos_array[1],"Bullets",_bullet_array);
+            var _bullet = _list[| actual_weapon].obj;
+            
+                if(!is_array(_bullet)){
+                    var _shoot = instance_create_layer(x+_pos_array[0],y+_pos_array[1],"Bullets",_bullet);
                     _shoot.spd = _list[| actual_weapon].speed;
+                    _shoot.dir = _list[| actual_weapon].dir_array;
                 }
-                    else{
-                    var _shoot = instance_create_layer(x+_pos_array[0],y+_pos_array[1],"Bullets",_bullet_array[i]);
+                for(var j=0; j<_array_w && is_array(_bullet); j++){
+                    var _shoot = instance_create_layer(x+_pos_array[0],y+_pos_array[1],"Bullets",_bullet[i]);
                     _shoot.spd = _list[| actual_weapon].speed; 
-                    }
+                    _shoot.dir = _list[| actual_weapon].dir_array;
+                }
+                fire_cooldown = _list[| actual_weapon].cooldown;
             }
         }
     }
+        else if(fire_cooldown > 0){
+            fire_cooldown--;
+        }
     // Things to do: Check if the bullets is a array and set different bullet
     // Define values to the bullet
 }

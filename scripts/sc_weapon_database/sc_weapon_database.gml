@@ -5,7 +5,7 @@
 // ds_map is better, beauty and hot :O
 global.weapons_db = ds_map_create();
 
-function weapon(_num,_name,_pos_array,_obj,_dir_array,_speed,_allow_spaceship) constructor {
+function weapon(_num,_name,_pos_array,_obj,_dir_array,_speed,_allow_spaceship,_cooldown) constructor {
     num = _num;
     name = _name;
     pos_array = _pos_array;
@@ -13,6 +13,7 @@ function weapon(_num,_name,_pos_array,_obj,_dir_array,_speed,_allow_spaceship) c
     dir_array = _dir_array;
     speed = _speed;
     allow_spaceship = _allow_spaceship;
+    cooldown = _cooldown;
 }
 
 function new_weapon(_struct){
@@ -37,8 +38,8 @@ function new_weapon(_struct){
 
 // Speed: This is per default a int value, but, it can be a array instead
 // If speed is a array, the array size MUST be the same as position array size
-new_weapon(new weapon(0,"PlaceHolderGun",[[0,-6],[4,-4],[-4,-4]],
-                      [obj_placeholderShip_bullet,par_player_bullet,obj_placeholderShip_bullet],0,3,"placeholdership"));
+new_weapon(new weapon(0,"PlaceHolderGun",[[0,-6],[12,8],[-12,8]],
+                      obj_placeholderShip_bullet,90,3,"placeholdership",15));
 
 new_weapon(new weapon(1,"TomaGap",[[0,-6],[4,-4],[-4,-4]],
-                      obj_placeholderShip_bullet,0,3,"placeholdership"));
+                      obj_placeholderShip_bullet,0,3,"placeholdership",10));
