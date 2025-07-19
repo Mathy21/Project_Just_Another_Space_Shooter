@@ -38,8 +38,16 @@ function new_weapon(_struct){
 
 // Speed: This is per default a int value, but, it can be a array instead
 // If speed is a array, the array size MUST be the same as position array size
+
+// Direction:
+/*            | 90
+ *            |
+ *  180 ------|------ 0 or 360
+ *            |
+ *            | 270    
+ */        
 new_weapon(new weapon(0,"PlaceHolderGun",[[0,-6],[12,8],[-12,8]],
                       obj_placeholderShip_bullet,90,3,"placeholdership",15));
 
-new_weapon(new weapon(1,"TomaGap",[[0,-6],[4,-4],[-4,-4]],
-                      obj_placeholderShip_bullet,0,3,"placeholdership",10));
+new_weapon(new weapon(1,"TomaGap",[[0,0],[12,10],[12,-10],[-12,10],[-12,-10]],
+                      obj_placeholderShip_bullet,[90,0,0,180,180],6,"placeholdership",10));

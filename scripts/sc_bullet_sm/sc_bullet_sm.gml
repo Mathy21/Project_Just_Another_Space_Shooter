@@ -5,7 +5,7 @@ function bullet_reset_state(){
     state = BULLET_STATE.MOVING;
 }
 
-function bullet_moving_state(){
+function bullet_moving_state() {
     hspd = lengthdir_x(spd,dir);
     vspd = lengthdir_y(spd,dir);
     

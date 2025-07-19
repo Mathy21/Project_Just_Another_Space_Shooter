@@ -100,6 +100,22 @@ find_weapons = function(_db){
 
 find_weapons(global.weapons_db);
 
+check_direction_array = function(_list,_sht,_i){
+    var _dir_array = _list[| actual_weapon].dir_array;
+    var _pos_array = _list[| actual_weapon].pos_array;
+    if(is_array(_dir_array)){
+        if(array_length(_dir_array) != array_length(_pos_array)){
+            show_debug_message("Direction array is not the same size as the position array!");
+            _sht.dir = _dir_array[0];
+            return;
+        }
+        _sht.dir = _dir_array[_i];
+    }
+        else{
+            _sht.dir = _dir_array;
+        }
+}
+
 // Fire system by the weapon is equiped
 set_weapon_and_fire = function(_list){
     if(actual_weapon >= ds_list_size(_list) || ds_list_empty(_list)){
@@ -117,12 +133,13 @@ set_weapon_and_fire = function(_list){
                 if(!is_array(_bullet)){
                     var _shoot = instance_create_layer(x+_pos_array[0],y+_pos_array[1],"Bullets",_bullet);
                     _shoot.spd = _list[| actual_weapon].speed;
-                    _shoot.dir = _list[| actual_weapon].dir_array;
+                    check_direction_array(_list,_shoot,i);
                 }
                 for(var j=0; j<_array_w && is_array(_bullet); j++){
                     var _shoot = instance_create_layer(x+_pos_array[0],y+_pos_array[1],"Bullets",_bullet[i]);
                     _shoot.spd = _list[| actual_weapon].speed; 
                     _shoot.dir = _list[| actual_weapon].dir_array;
+                    check_direction_array(_list,_shoot,i);
                 }
                 fire_cooldown = _list[| actual_weapon].cooldown;
             }
